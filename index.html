@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mail-in voting help</title>
+<style>
+  :root {
+    --bg: #eef1f4;
+    --panel: #ffffff;
+    --ink: #14202b;
+    --muted: #53606c;
+    --line: #c9d1d9;
+    --accent: #0b5c7a;
+    --accent-ink: #ffffff;
+    --user: #14202b;
+    --user-ink: #ffffff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #10181f;
+      --panel: #19242d;
+      --ink: #e8edf1;
+      --muted: #9aa8b4;
+      --line: #33424f;
+      --accent: #6cc3e0;
+      --accent-ink: #0b1a22;
+      --user: #e8edf1;
+      --user-ink: #10181f;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
+  header, main, footer { width: 100%; max-width: 44rem; margin: 0 auto; padding-left: 1rem; padding-right: 1rem; }
+  header { padding-top: 1.5rem; padding-bottom: 0.75rem; }
+  h1 { font: 700 1.75rem/1.2 Georgia, "Times New Roman", serif; margin: 0 0 0.25rem; }
+  #botSub { margin: 0; color: var(--muted); }
+  main { flex: 1; display: flex; flex-direction: column; min-height: 0; }
+  #log { flex: 1; overflow-y: auto; padding: 0.75rem 0; display: flex; flex-direction: column; gap: 0.75rem; }
+  .msg { max-width: 92%; padding: 0.7rem 0.9rem; border-radius: 0.6rem; background: var(--panel); border: 1px solid var(--line); overflow-wrap: anywhere; }
+  .msg p { margin: 0; white-space: pre-line; }
+  .msg p + p { margin-top: 0.4rem; }
+  .msg.user { align-self: flex-end; background: var(--user); color: var(--user-ink); border-color: var(--user); }
+  /* Answers read like a ballot stub: a dashed tear line on the left. */
+  .msg.answer { border-left: 3px dashed var(--accent); }
+  .msg h2 { font: 700 1.15rem/1.3 Georgia, "Times New Roman", serif; margin: 0 0 0.5rem; }
+  .item { margin-top: 0.6rem; }
+  .item strong { display: block; font-weight: 650; }
+  .meta { margin-top: 0.75rem; color: var(--muted); font-size: 0.9rem; }
+  a { color: var(--accent); }
+  form { display: flex; gap: 0.5rem; padding: 0.75rem 0; }
+  input[type="text"] {
+    flex: 1; min-width: 0; font: inherit; color: var(--ink); background: var(--panel);
+    border: 1px solid var(--line); border-radius: 0.5rem; padding: 0.65rem 0.8rem;
+  }
+  button {
+    font: inherit; font-weight: 650; color: var(--accent-ink); background: var(--accent);
+    border: 0; border-radius: 0.5rem; padding: 0.65rem 1.1rem; cursor: pointer;
+  }
+  input:focus-visible, button:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  footer { padding-top: 0.5rem; padding-bottom: 1rem; color: var(--muted); font-size: 0.9rem; }
+  footer p { margin: 0; }
+</style>
+</head>
+<body>
+  <header>
+    <h1 id="botTitle">Mail-in voting help</h1>
+    <p id="botSub"></p>
+  </header>
+
+  <main>
+    <div id="log" role="log" aria-live="polite" aria-label="Conversation"></div>
+    <form id="askForm" autocomplete="off">
+      <label for="askInput" hidden>Your question</label>
+      <input id="askInput" type="text" placeholder="Ask about a state, such as a deadline" maxlength="300">
+      <button type="submit">Ask</button>
+    </form>
+  </main>
+
+  <footer>
+    <p id="loadedAt">Loading data…</p>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="bot.js"></script>
+</body>
+</html>
